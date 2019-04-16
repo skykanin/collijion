@@ -1,0 +1,12 @@
+(ns collijion.core
+  (:import [javafx.scene Scene]
+           [javafx.stage Stage]))
+
+(gen-class
+ :name clj.collijion.App
+ :extends javafx.application.Application
+ :prefix "app-")
+
+
+(defn app-start
+  [^Stage stage])
