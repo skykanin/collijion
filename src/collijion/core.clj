@@ -1,39 +1,30 @@
 (ns collijion.core
-  (:import [javafx.animation KeyFrame
-                             KeyValue
-                             Timeline]
-           [javafx.application Application]
-           [javafx.scene Group
-            Scene]
-           [javafx.scene.shape Circle]
-           [javafx.scene.paint Color]
-           [javafx.stage Stage]
-           [javafx.util Duration]))
+  (:require [cljfx.api :as fx]))
 
-(defn -start
-  [this ^Stage stage]
-  (let [circle (doto (Circle. 50.0 135.0 50.0) (.setFill Color/RED))
-        group (Group. [circle])
-        kv (KeyValue. (.translateXProperty circle) 400)
-        anim (Timeline. 60.0 (into-array
-                              KeyFrame
-                              [(KeyFrame.
-                                (Duration. 500.0)
-                                (into-array KeyValue [kv]))]))
-        scene (Scene. group 700 600)]
-    (doto anim
-      (.setCycleCount 20)
-      (.setAutoReverse true)
-      (.play))
-    (doto stage
-      (.setTitle "Drawing a Circle")
-      (.setScene scene)
-      (.show))))
+(def renderer
+  (fx/create-renderer))
 
-(defn -main
-  [& args]
-  (Application/launch collijion.core args))
-
-(proxy [Application][]
-  (start [this ^Stage stage] (-start this stage))
-  (main [& args] (-main args)))
+(defn root [{:keys [x]}]
+  {:fx/type :stage
+   :showing true
+   :title "some example"
+   :width 500
+   :height 500
+   :scene {:fx/type :scene
+           :root {:fx/type :group
+                  :children [{:fx/type :circle
+                              :center-x x
+                              :center-y 200
+                              :radius 50
+                              :fill :green}]}}})
+                                         
+(defn -main [& args]
+  (loop [x 50]
+    (if (= x 450)
+     (renderer {:fx/type root
+                :x x})
+     (do
+       (renderer {:fx/type root
+                  :x x})
+       (Thread/sleep 5)
+       (recur (inc x))))))
