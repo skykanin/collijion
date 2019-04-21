@@ -6,22 +6,22 @@
 (defrecord Planet [m r x y ^PersistentVector v])
 
 (defn add
-  "Add a vector to another"
+  "Adds a vector to another"
   [a b]
   (mapv + a b))
 
 (defn sub
-  "Subtract a vector from another"
+  "Subtracts a vector from another"
   [a b]
   (mapv - a b))
 
 (defn mult
-  "Multiply a vector by a number"
+  "Multiplies a vector by a number"
   [v n]
   (mapv #(* % n) v))
 
 (defn div
-  "Divide a vector by a number"
+  "Divides a vector by a number"
   [v n]
   (when-not (= n 0)
    (mapv #(/ % n) v)))
