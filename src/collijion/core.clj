@@ -4,27 +4,30 @@
 (def renderer
   (fx/create-renderer))
 
-(defn root [{:keys [x]}]
+(defn root [{:keys [y]}]
   {:fx/type :stage
    :showing true
    :title "some example"
    :width 500
-   :height 500
+   :height 800
    :scene {:fx/type :scene
            :root {:fx/type :group
                   :children [{:fx/type :circle
-                              :center-x x
-                              :center-y 200
+                              :center-x 250
+                              :center-y y
                               :radius 50
-                              :fill :green}]}}})
+                              :fill :blue}
+                             {:fx/type :circle
+                              :center-x 250
+                              :center-y 400
+                              :radius 50
+                              :fill :red}]}}})
                                          
 (defn -main [& args]
-  (loop [x 50]
-    (if (= x 450)
-     (renderer {:fx/type root
-                :x x})
-     (do
-       (renderer {:fx/type root
-                  :x x})
-       (Thread/sleep 5)
-       (recur (inc x))))))
+  (loop [y 699
+         v 15
+         g 0.2]
+    (when-not (>= y 750)
+      (renderer {:fx/type root :y y})
+      (Thread/sleep 30)
+      (recur (- y v) (- v g) g))))
