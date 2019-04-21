@@ -7,43 +7,45 @@
 
 (defn add
   "Add a vector to another"
-  [[ax ay] [bx by]]
-  [(+ ax bx) (+ ay by)])
+  [a b]
+  (mapv + a b))
 
 (defn sub
   "Subtract a vector from another"
-  [[ax ay] [bx by]]
-  [(- ax bx) (- ay by)])
+  [a b]
+  (mapv - a b))
 
 (defn mult
   "Multiply a vector by a number"
-  [[x y] n]
-  [(* x n) (* y n)])
+  [v n]
+  (mapv #(* % n) v))
 
 (defn div
-  "Devide a vector by a number"
-  [[x y] n]
-  [(/ x n) (/ y n)])
+  "Divide a vector by a number"
+  [v n]
+  (when-not (= n 0)
+   (mapv #(/ % n) v)))
 
 (defn distance
-  "Calculates Euclidean distance between two points"
+  "Calculates the Euclidean distance between
+  two points"
   [p1 p2]
   (Math/sqrt
    (+ (Math/pow (- (:x p1) (:x p2)) 2)
       (Math/pow (- (:y p1) (:y p2)) 2))))
 
 (defn magnitude
-  "Calculates magnitude of a vector"
+  "Calculates the magnitude of a vector"
   [[x y]]
   (Math/sqrt (+ (Math/pow x 2) (Math/pow y 2))))
 
 (defn unit
   "Calculates the unit vector of a vector"
-  [[x y :as v]]
+  [v]
   (let [m (magnitude v)]
     (if (= m 0)
       [0 0]
-      [(/ x m) (/ y m)])))
+      (div v m))))
 
 (defn grav-vec
   "Calculates the attraction force between two
