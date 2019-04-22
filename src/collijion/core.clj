@@ -1,33 +1,32 @@
 (ns collijion.core
-  (:require [cljfx.api :as fx]))
+  (:require [cljfx.api :as fx]
+            [collijion.planet])
+  (:import [collijion.planet Planet]))
 
 (def renderer
   (fx/create-renderer))
 
-(defn root [{:keys [y]}]
+(defn root [{:keys [planets]}]
   {:fx/type :stage
    :showing true
-   :title "some example"
-   :width 500
+   :title "gravity"
+   :width 800
    :height 800
    :scene {:fx/type :scene
            :root {:fx/type :group
-                  :children [{:fx/type :circle
-                              :center-x 250
-                              :center-y y
-                              :radius 50
-                              :fill :blue}
-                             {:fx/type :circle
-                              :center-x 250
-                              :center-y 400
-                              :radius 50
-                              :fill :red}]}}})
-                                         
+                  :children (into []
+                             (for [{:keys [x y r]} planets]
+                               {:fx/type :circle
+                                :center-x x
+                                :center-y y
+                                :radius r
+                                :fill :black}))}}})
+
 (defn -main [& args]
-  (loop [y 699
-         v 15
-         g 0.2]
-    (when-not (>= y 750)
-      (renderer {:fx/type root :y y})
-      (Thread/sleep 30)
-      (recur (- y v) (- v g) g))))
+  "Entrypoint for the program"
+  (loop [planets [(Planet. 100000 50 400 400 [0 0])
+                  (Planet. 1000 20 700 50 [-5 10])]]
+    (renderer {:fx/type root :planets planets})
+    #_(println (:v (last planets)))
+    (Thread/sleep 100)
+    (recur (collijion.planet/update-planets planets))))
