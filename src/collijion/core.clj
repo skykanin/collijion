@@ -24,9 +24,12 @@
 
 (defn -main [& args]
   "Entrypoint for the program"
-  (loop [planets [(Planet. 100000 50 400 400 [0 0])
-                  (Planet. 1000 20 700 50 [-5 10])]]
+  (loop [planets [(Planet. 999999 60 400 400 [0 0])
+                  (Planet. 100 10 700 50 [-5 10])
+                  (Planet. 100 10 100 750 [5 -10])
+                  (Planet. 100 10 700 400 [-5 -3])
+                  (Planet. 100 10 100 400 [5 3])]]
     (renderer {:fx/type root :planets planets})
-    #_(println (:v (last planets)))
+    (println (:v (last planets)))
     (Thread/sleep 100)
     (recur (collijion.planet/update-planets planets))))

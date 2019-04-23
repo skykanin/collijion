@@ -2,7 +2,7 @@
   (:import [clojure.lang PersistentVector]))
 
 #_(def G 6.67264E-11)
-(def G 7E-5)
+(def G 6.67E-5)
 
 (defrecord Planet [m r x y ^PersistentVector v])
 
@@ -55,11 +55,10 @@
   [{x1 :x y1 :y :as p1} {x2 :x y2 :y :as p2}]
   (let [dist (distance p2 p1)
         unit (div (sub [x2 y2] [x1 y1]) dist)]
-    (mult
-     unit
+    (mult unit
      (* (- G)
-       (/ (* (:m p1) (:m p2))
-          (Math/pow dist 2))))))
+        (/ (* (:m p1) (:m p2))
+           (Math/pow dist 2))))))
 
 (defn gen-f-vec
   "Calculate all force vectors for all objects in
