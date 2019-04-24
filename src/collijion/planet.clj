@@ -2,7 +2,7 @@
   (:import [clojure.lang PersistentVector]))
 
 #_(def G 6.67264E-11)
-(def G 6.67E-5)
+(def G 6.67E-9)
 
 (defrecord Planet [m r x y ^PersistentVector v])
 
@@ -15,6 +15,11 @@
   "Subtracts an arbitrary amount of vectors"
   [& colls]
   (reduce (partial mapv -) colls))
+
+(defn neg
+  "Negate vector"
+  [[x y]]
+  [(- x) (- y)])
 
 (defn mult
   "Multiplies a vector by a number"
@@ -71,11 +76,15 @@
 
 (defn apply-forces
   "Apply all the force vectors to the planets"
-  [planets forces]
-  (let [sum-forces (fn [old fl] (reduce add old fl))
-        zip (fn [planet force-list]
-              (update planet :v sum-forces force-list))]
-   (map zip planets forces)))
+  ([planets forces] (apply-forces planets forces 60))
+
+  ([planets forces timestep]
+   (let [seconds (/ timestep 1000)
+         sum-forces (fn [old fl]
+                      (add old (mult (reduce add fl) seconds)))
+         zip (fn [p force-list]
+               (update p :v sum-forces force-list))]
+    (map zip planets forces))))
 
 (defn apply-speed
   "Applies the new velocity to the planets"
