@@ -6,7 +6,7 @@
 (def renderer
   (fx/create-renderer))
 
-(def timestep 60)
+(def timestep 50)
 
 (defn root [{:keys [planets]}]
   {:fx/type :stage
@@ -34,11 +34,10 @@
 
 (defn -main [& args]
   "Entrypoint for the program"
-  (loop [planets [(Planet. 999999999 20 400 400 [0 0])
-                  #_(Planet. 100 10 700 50 [-5 10])
-                  (Planet. 100 5 100 750 [1.25 -1.75])
-                  (Planet. 100 10 700 400 [-5 -3])
-                  (Planet. 100 5 100 400 [1.25 0.75])]]
+  (loop [planets [(Planet. 6E13 30 400 400 [0 0])
+                  (Planet. 1500 5 700 50 [-5 10])
+                  (Planet. 1000 5 100 750 [2.5 -5])
+                  (Planet. 500 10 700 400 [-5 -3])]]
     (renderer {:fx/type root :planets planets})
     (Thread/sleep timestep)
     (recur (collijion.planet/update-planets planets))))
