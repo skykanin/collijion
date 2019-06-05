@@ -1,4 +1,4 @@
-# Collijion &middot; [![CircleCI](https://circleci.com/gh/skykanin/collijion.svg?style=svg)](https://circleci.com/gh/skykanin/collijion) [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
+# Collijion &middot; [![CircleCI](https://circleci.com/gh/skykanin/collijion.svg?style=svg)](https://circleci.com/gh/skykanin/collijion) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 An attempt at a concurrent N-body simulator in using JavaFX and STM concurrency constructs.
 
