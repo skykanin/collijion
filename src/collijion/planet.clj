@@ -2,7 +2,6 @@
   (:import [clojure.lang PersistentVector]))
 
 (def G 6.67264E-11)
-#_(def G 1E-5)
 
 (defrecord Planet [m r x y ^PersistentVector v])
 
