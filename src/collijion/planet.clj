@@ -30,7 +30,7 @@
   "Divides a vector by a number"
   [v n]
   (when-not (= n 0)
-   (mapv #(/ % n) v)))
+    (mapv #(/ % n) v)))
 
 (defn magnitude
   "Calculates the magnitude of a vector"
@@ -62,9 +62,9 @@
   a vector"
   [planets]
   (partition (dec (count planets))
-   (for [p1 planets p2 planets
-         :when (not= p1 p2)]
-     (grav-vec p1 p2)))) ;check this application
+             (for [p1 planets p2 planets
+                   :when (not= p1 p2)]
+               (grav-vec p1 p2)))) ;check this application
 
 (defn apply-forces
   "Apply all the force vectors to the planets"
@@ -83,8 +83,8 @@
   [planets]
   (let [move (fn [{[vx vy] :v :as p}]
                (-> p
-                (update :x + vx)
-                (update :y + vy)))]
+                   (update :x + vx)
+                   (update :y + vy)))]
     (map move planets)))
 
 (defn update-planets

@@ -1,9 +1,9 @@
 (ns collijion.planet-test
-    (:require [clojure.test :refer :all]
-              [collijion.planet :as p])
-    (:import [collijion.planet Planet]))
+  (:require [clojure.test :refer :all]
+            [collijion.planet :as p])
+  (:import [collijion.planet Planet]))
 
-(deftest basic-arithmetic 
+(deftest basic-arithmetic
   (testing "Vector addition"
     (is (= (p/add [20 20] [15 15]) [35 35]))
     (is (= (p/add [-20 5] [10 20]) [-10 25]))
@@ -22,7 +22,7 @@
     (is (= (p/mult [20 20] 5) [100 100]))
     (is (= (p/mult [10 10] -5) [-50 -50]))
     (is (= (p/mult [-5 -5] -5) [25 25])))
-      
+
   (testing "Vector division"
     (is (= (p/div [50 50] 5) [10 10]))
     (is (= (p/div [25 25] -5) [-5 -5]))

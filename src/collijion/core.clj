@@ -17,20 +17,20 @@
    :scene {:fx/type :scene
            :root {:fx/type :group
                   :children (into []
-                             (flatten
-                               (for [{:keys [m r x y v]} planets]
-                                [{:fx/type :circle
-                                  :center-x x
-                                  :center-y y
-                                  :radius r
-                                  :fill (if (> m 1000) :black :brown)}
-                                 {:fx/type :line
-                                  :start-x x
-                                  :start-y y
-                                  :end-x (+ x (* (first v) r))
-                                  :end-y (+ y (* (last v) r))
-                                  :stroke :red
-                                  :stroke-width 1.5}])))}}})
+                                  (flatten
+                                   (for [{:keys [m r x y v]} planets]
+                                     [{:fx/type :circle
+                                       :center-x x
+                                       :center-y y
+                                       :radius r
+                                       :fill (if (> m 1000) :black :brown)}
+                                      {:fx/type :line
+                                       :start-x x
+                                       :start-y y
+                                       :end-x (+ x (* (first v) r))
+                                       :end-y (+ y (* (last v) r))
+                                       :stroke :red
+                                       :stroke-width 1.5}])))}}})
 
 (defn -main [& args]
   "Entrypoint for the program"
