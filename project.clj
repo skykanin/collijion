@@ -5,5 +5,6 @@
             :url "https://www.gnu.org/licenses/gpl-3.0.en.html"}
   :main collijion.core
   :dependencies [[org.clojure/clojure "1.10.0"]
-                 [cljfx "1.2.8"]]
+                 [cljfx "1.3.5"]]
   :plugins [[lein-cljfmt "0.6.4"]])
+
