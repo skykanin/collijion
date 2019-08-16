@@ -1,14 +1,14 @@
 (ns collijion.quad-tree)
 
 (defrecord Point [x y])
-  
+
 (defrecord Boundary [x y s])
 
 (defrecord QuadTree
-    [boundary max-points
+           [boundary max-points
 ;     nw ne
 ;     sw se
-     points divided?])
+            points divided?])
 
 (defn make-qtree
   "Instanciates an empty quad tree"
@@ -20,7 +20,7 @@
 (defn- in-boundary?
   "Returns true if point is in boundary"
   [{:keys [x y s]} {px :x py :y}]
-  (let [half-s (/ s 2)]     
+  (let [half-s (/ s 2)]
     (and (>= px (- x half-s)) (<= px (+ x half-s))
          (>= py (- y half-s)) (<= py (+ y half-s)))))
 
@@ -35,18 +35,18 @@
            :ne (Boundary. (+ x quart-s) (- y quart-s) half-s)
            :sw (Boundary. (- x quart-s) (+ y quart-s) half-s)
            :se (Boundary. (+ x quart-s) (+ y quart-s) half-s))]
-    (QuadTree. (create-bound coord) max-points [] false)))         
+    (QuadTree. (create-bound coord) max-points [] false)))
 
 (defn- partition-qtree
   "Partitions a quad tree if not already divided"
   [{:keys [boundary divided? max-points] :as qtree}]
   (if divided? qtree
-     (-> qtree
-         (update :nw create-quadrant :nw boundary max-points)
-         (update :ne create-quadrant :ne boundary max-points)
-         (update :sw create-quadrant :sw boundary max-points)
-         (update :se create-quadrant :se boundary max-points)
-         (assoc :divided? true))))
+      (-> qtree
+          (update :nw create-quadrant :nw boundary max-points)
+          (update :ne create-quadrant :ne boundary max-points)
+          (update :sw create-quadrant :sw boundary max-points)
+          (update :se create-quadrant :se boundary max-points)
+          (assoc :divided? true))))
 
 (defn- find-leaf-path
   "Finds correct path for point insertion to a
