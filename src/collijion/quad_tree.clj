@@ -80,16 +80,36 @@
           (in-boundary? (:boundary sw) point) (recur (update-fn m :sw))
           (in-boundary? (:boundary se) point) (recur (update-fn m :se)))))))
 
+(defn- update-grav
+  "Calculate and update a tree node's average position and mass"
+  [{:keys [points] :as qt-node}]
+  (let [sum-points (fn [acc val]
+                     {:x (+ (:x acc) (:x val))
+                      :y (+ (:y acc) (:y val))
+                      :m (+ (:m acc) (:m val))})
+        len (count points)
+        average (comp
+                 (fn [{:keys [x y m]}]
+                   {:x (/ x len) :y (/ y len) :m (/ m len)})
+                 (partial reduce sum-points {:x 0 :y 0 :m 0}))]
+    (if (zero? len) qt-node
+        (assoc qt-node :average (average points)))))
+
+;; TODO: Implement a mapping function for the quad tree
+
 (defn- insert
   "Returns an updated quad tree with an inserted point"
   [{:keys [boundary divided? points max-points] :as qtree} point]
   (cond
     (and (in-boundary? boundary point) (> max-points (count points)))
-    (update qtree :points #(conj % point))
+    (-> qtree
+        (update :points #(conj % point))
+        update-grav)
     (and (in-boundary? boundary point) (= max-points (count points)) divided?)
     (-> qtree
         (update-in (find-leaf-path point qtree) #(conj % point))
-        move-points-down)
+        move-points-down
+        update-grav)
     (and (in-boundary? boundary point) (= max-points (count points)) (not divided?))
     (insert (partition-qtree qtree) point)
     :else (println "Point not in bounds")))
