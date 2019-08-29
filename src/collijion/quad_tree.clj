@@ -1,13 +1,9 @@
 (ns collijion.quad-tree)
 
-(defrecord Point [x y])
-
 (defrecord Boundary [x y s])
 
 (defrecord QuadTree
            [boundary max-points
-;     nw ne
-;     sw se
             points divided?])
 
 (defn make-qtree
