@@ -93,9 +93,3 @@
     (and (in-boundary? boundary point) (= max-points (count points)) (not divided?))
     (insert (partition-qtree qtree) point)
     :else (println "Point not in bounds")))
-
-(defn whatever [map]
-  (loop [m map]
-    (if (empty? (:points m))
-      m
-      (recur (update m :points (comp vec (partial drop 1)))))))
