@@ -105,7 +105,7 @@
         (update :ne (partial fmap f))
         (update :sw (partial fmap f))
         (update :se (partial fmap f)))))
-  
+
 (defn- insert
   "Returns an updated quad tree with an inserted point"
   [{:keys [boundary divided? points max-points] :as qtree} point]
