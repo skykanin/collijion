@@ -95,8 +95,17 @@
     (if (zero? len) qt-node
         (assoc qt-node :average (average points)))))
 
-;; TODO: Implement a mapping function for the quad tree
-
+(defn fmap
+  "Map a function over a quad tree"
+  [f {:keys [divided?] :as qt}]
+  (if-not divided?
+    (update qt :points (partial mapv f))
+    (-> qt
+        (update :nw (partial fmap f))
+        (update :ne (partial fmap f))
+        (update :sw (partial fmap f))
+        (update :se (partial fmap f)))))
+  
 (defn- insert
   "Returns an updated quad tree with an inserted point"
   [{:keys [boundary divided? points max-points] :as qtree} point]
