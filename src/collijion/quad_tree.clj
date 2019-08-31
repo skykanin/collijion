@@ -96,10 +96,10 @@
         (assoc qt-node :average (average points)))))
 
 (defn fmap
-  "Map a function over a quad tree"
+  "Map a function over a quad tree for a specified key"
   [f {:keys [divided?] :as qt}]
   (if-not divided?
-    (update qt :points (partial mapv f))
+    (f qt)
     (-> qt
         (update :nw (partial fmap f))
         (update :ne (partial fmap f))
